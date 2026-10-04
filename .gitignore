@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/chroma_db/
+data/raw/**/*.pdf
+data/raw/**/*.txt
+!data/raw/**/SOURCES.md
+frontend/node_modules/
+frontend/dist/
+.DS_Store
+.vscode/
