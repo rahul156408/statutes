@@ -1,0 +1,26 @@
+[
+  {
+    "conflict_id": "CONF_001",
+    "jurisdictions": ["DPDP", "GDPR"],
+    "domain": "Cross-Border Data Transfer & Localization",
+    "description": "DPDP/sectoral restrictions or government notifications restricting transfer to certain territories vs. GDPR Chapter V free flow with adequacy/safeguards.",
+    "obligation_a": {
+      "jurisdiction": "DPDP",
+      "clause_ref": "Section 16",
+      "predicate_type": "RESTRICTION",
+      "target": "Cross-border transfer of personal data",
+      "condition": "Central Government notifies restricted countries/territories",
+      "enforced": true
+    },
+    "obligation_b": {
+      "jurisdiction": "GDPR",
+      "clause_ref": "Article 44-49",
+      "predicate_type": "PERMISSIVE_WITH_CONDITIONS",
+      "target": "Transfer of personal data outside EU",
+      "condition": "Subject to adequacy decision, standard contractual clauses (SCCs), or binding corporate rules",
+      "enforced": true
+    },
+    "is_jointly_unsatisfiable": true,
+    "explanation": "If the Central Government under DPDP restricts transfers to a specific geography where an EU adequacy-approved server resides, an organization operating in both jurisdictions faces contradictory compliance mandates."
+  }
+]
