@@ -2,7 +2,7 @@
 
 Project: StatuteRadar, a RAG-based system for cross-jurisdictional regulatory conflict detection.
 
-Status: code complete and merged to `main` (PR #2). Automated checks pass. The manual spot-check is in progress (section 7).
+Status: code complete and merged to `main` (PR #2). Automated checks pass. The manual spot-check is complete and found no errors in the sample (section 7).
 
 ## 1. Summary
 
@@ -12,9 +12,9 @@ Status: code complete and merged to `main` (PR #2). Automated checks pass. The m
 | Provision-level chunks        | 1,554 (GDPR 838, DPDP Act 208, DPDP Rules 128, CCPA 380)    |
 | Automated tests               | 30 pass (16 unit tests, 14 corpus checks)                   |
 | Chunk size (estimated tokens) | median 70, 95th percentile 190, maximum 267, budget 200     |
-| Manual spot-check             | In progress, results will be added (section 7)              |
+| Manual spot-check             | 32 of 32 sampled chunks and 10 of 10 key provisions correct |
 
-The automated checks prove that the structure of the corpus is right: unit counts, order, provenance and key wording. They do not prove that every word of every chunk is right. That is the purpose of the manual spot-check, and no accuracy percentage is claimed until it is complete.
+The automated checks prove that the structure of the corpus is right: unit counts, order, provenance and key wording. They do not prove that every word of every chunk is right. That is the purpose of the manual spot-check (section 7). It found no errors in 32 sampled chunks, but a sample of that size cannot show that the corpus is error-free, so no overall accuracy percentage is claimed.
 
 ## 2. Sources
 
@@ -115,7 +115,7 @@ These run on small inline documents and need no downloaded files. They cover nor
 
 ## 7. Manual spot-check
 
-Status: in progress. Results are added here when it is complete.
+Status: complete. Reviewer: the author of the pipeline (a single reviewer, so the check is not independent).
 
 ### 7.1 Method
 
@@ -128,40 +128,45 @@ Differences that are expected and are not errors: the leading marker is removed,
 
 ### 7.2 Key provisions
 
-| Provision        | Expected content                                             | Status  |
-| ---------------- | ------------------------------------------------------------ | ------- |
-| GDPR Art. 4(1)   | Definition of personal data                                  | Pending |
-| GDPR Art. 17(1)  | Right to erasure, grounds (a) to (f)                         | Pending |
-| GDPR Art. 33(1)  | Breach notification within 72 hours                          | Pending |
-| DPDP s.8(6)      | Intimation of a personal data breach                         | Pending |
-| DPDP s.9         | Children's data and verifiable parental consent              | Pending |
-| DPDP s.16        | Processing outside India                                     | Pending |
-| DPDP Rules r.7   | Breach intimation and the detailed report                    | Pending |
-| DPDP Rules r.15  | Transfer outside India (title confirmed in the first sample) | Pending |
-| CCPA 1798.105(a) | Right to request deletion                                    | Pending |
-| CCPA 1798.140(v) | Expected to be the definition of personal information        | Pending |
+| Provision        | Expected content                                | Result  |
+| ---------------- | ----------------------------------------------- | ------- |
+| GDPR Art. 4(1)   | Definition of personal data                     | Correct |
+| GDPR Art. 17(1)  | Right to erasure, grounds (a) to (f)            | Correct |
+| GDPR Art. 33(1)  | Breach notification within 72 hours             | Correct |
+| DPDP s.8(6)      | Intimation of a personal data breach            | Correct |
+| DPDP s.9         | Children's data and verifiable parental consent | Correct |
+| DPDP s.16        | Processing outside India                        | Correct |
+| DPDP Rules r.7   | Breach intimation and the detailed report       | Correct |
+| DPDP Rules r.15  | Transfer outside the territory of India         | Correct |
+| CCPA 1798.105(a) | Right to request deletion                       | Correct |
+| CCPA 1798.140(v) | Definition of personal information              | Correct |
 
-### 7.3 Sample results
+### 7.3 Results
 
-One row per checked chunk. Use: correct, limitation (with a note), or wrong (with a note).
+| Sample                              | Checked | Correct | Wrong |
+| ----------------------------------- | ------- | ------- | ----- |
+| GDPR (random, seed 42)              | 8       | 8       | 0     |
+| DPDP Act (random, seed 42)          | 8       | 8       | 0     |
+| DPDP Rules (random, seed 42)        | 8       | 8       | 0     |
+| CCPA (random, seed 42)              | 8       | 8       | 0     |
+| Random sample total                 | 32      | 32      | 0     |
+| Key provisions (chosen, not random) | 10      | 10      | 0     |
 
-| Chunk ID                   | Citation | Text    | Boundary | Notes   |
-| -------------------------- | -------- | ------- | -------- | ------- |
-| gdpr:art6:p3:ptb:w2        | Pending  | Pending | Pending  | See 7.4 |
-| gdpr:rec173                | Pending  | Pending | Pending  | See 7.4 |
-| dpdp_rules:sched-fourth:w6 | Pending  | Pending | Pending  | See 7.4 |
+Three of the sampled chunks are correct but carry a known limitation, described in 7.4.
 
-### 7.4 Observations from the first sample review
+### 7.4 Known limitations seen in the sample
 
-These were noticed in the printed sample and are to be confirmed against the official texts.
+These are not counted as errors. The chunk text is a faithful copy of the source. The limitation concerns attribution, context or a stray marker.
 
-- `gdpr:art6:p3:ptb:w2` is cited as Art. 6(3)(b) but ends with the sentence that closes the whole of paragraph 3. Closing text after a list of points is attached to the last point.
-- `gdpr:rec173` contains a footnote marker, `( 18 )`.
-- `dpdp_rules:sched-fourth:w6` starts in the middle of a list, because schedules are flat windows without heading context.
+| Chunk ID                     | Limitation                                                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------------------ |
+| `gdpr:art6:p3:ptb:w2`        | Cited as Art. 6(3)(b) but ends with the sentence that closes the whole of paragraph 3      |
+| `gdpr:rec173`                | Contains a footnote marker, `( 18 )`                                                       |
+| `dpdp_rules:sched-fourth:w6` | Starts in the middle of a list, because schedules are flat windows without heading context |
 
-### 7.5 Result
+### 7.5 Interpretation
 
-To be completed: N of M checked chunks verified correct, K with known-limitation notes, and the number of errors found.
+No error was found in 32 sampled chunks or in the 10 key provisions. This does not show that the corpus is error-free. With zero errors in 32 independent draws, the 95 percent upper bound on the error rate is about 9 percent (the rule of three, 3 divided by 32). The check was done by one reviewer who also wrote the pipeline. The structural tests in section 5 cover what a sample cannot, such as complete unit counts and provenance for every chunk. A second reviewer can repeat the check with a different seed, for example `python scripts/sample_chunks.py 8 7`.
 
 ## 8. Known limitations
 
@@ -174,6 +179,7 @@ To be completed: N of M checked chunks verified correct, K with known-limitation
 - When a paragraph is split into points, its lead-in sentence is repeated in each chunk unless the lead-in is very long.
 - Closing text that follows a list of points (for example GDPR Art. 6(3)) is attached to the last point's chunk, so the point letter can be imprecise for that sentence. The paragraph number stays correct.
 - Footnote markers such as `( 18 )` remain inside some GDPR recital texts.
+- The manual spot-check was done by a single reviewer, the author of the pipeline. An independent second check is recommended.
 
 ## 9. Reproducing the results
 
@@ -189,6 +195,6 @@ python scripts/sample_chunks.py 8 42
 
 ## 10. Next steps
 
-1. Complete the manual spot-check and record the result in section 7.
+1. Optional: an independent second spot-check with a different seed.
 2. Follow-up fixes: attach closing text to its paragraph instead of the last point, and strip footnote markers from recitals.
 3. Phase 2: embed the chunks, build the retrieval index, and measure the real token lengths against the embedding model.
