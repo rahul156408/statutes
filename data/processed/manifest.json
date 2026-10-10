@@ -1,0 +1,73 @@
+{
+  "generated_utc": "2026-10-10T04:57:42+00:00",
+  "python": "3.12.10",
+  "max_chunk_tokens": 200,
+  "sources": {
+    "gdpr": {
+      "source_file": "data/raw/gdpr/gdpr_eurlex.html",
+      "source_sha256": "a9e03410b1e30b724053f2ac3a285f153e5220b6a9db69f41d03ba4d4c5ffae6",
+      "normalized_sha256": "b8dd2b01b18c64169a1959a18cc1afb9eecd4d8c7f7af2a35dd313993c62e4ec",
+      "n_units": 272,
+      "n_chunks": 838,
+      "units_by_kind": {
+        "recital": 173,
+        "operative": 98,
+        "definition": 1
+      },
+      "chunks_by_kind": {
+        "recital": 229,
+        "operative": 583,
+        "definition": 26
+      }
+    },
+    "dpdp": {
+      "source_file": "data/raw/dpdp/dpdp_act_2023.pdf",
+      "source_sha256": "4deb23981d3010c8225a2ff6149e7243dc2268455b299e283afebdd7b72a7d15",
+      "normalized_sha256": "4099b2a7bc87dda719ddae7d88fc1dbf55a84f33607f4ff9623ea72f358fce11",
+      "n_units": 45,
+      "n_chunks": 208,
+      "units_by_kind": {
+        "operative": 43,
+        "definition": 1,
+        "schedule": 1
+      },
+      "chunks_by_kind": {
+        "operative": 178,
+        "definition": 28,
+        "schedule": 2
+      }
+    },
+    "dpdp_rules": {
+      "source_file": "data/raw/dpdp/dpdp_rules_2025.pdf",
+      "source_sha256": "eabc7d05e013144615d78ddc0e8b9c9aac1920e814f4fad38ce6560951f5aa08",
+      "normalized_sha256": "3add5dd5f99622f82b7136c2ec0c682a7517c5b4eec92147bc58e53c6f1ae261",
+      "n_units": 30,
+      "n_chunks": 128,
+      "units_by_kind": {
+        "operative": 22,
+        "definition": 1,
+        "schedule": 7
+      },
+      "chunks_by_kind": {
+        "operative": 79,
+        "definition": 5,
+        "schedule": 44
+      }
+    },
+    "ccpa": {
+      "source_file": "data/raw/ccpa/ccpa_civil_code.html",
+      "source_sha256": "055113a9af1b1e7bfd4b69a2d78d874f1673352b0220906045293a5eab6879fd",
+      "normalized_sha256": "e675ff1f47c96528d3843e46a77117b768df42dd2ffbb0c885c3b31ff089aff4",
+      "n_units": 46,
+      "n_chunks": 380,
+      "units_by_kind": {
+        "operative": 45,
+        "definition": 1
+      },
+      "chunks_by_kind": {
+        "operative": 307,
+        "definition": 73
+      }
+    }
+  }
+}
