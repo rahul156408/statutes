@@ -1,33 +1,23 @@
 # Phase 1 verification
 
-## Method
-Structural tests (28 automated checks) plus a manual spot-check against the official sources. 
-Random sample: `python scripts/sample_chunks.py 8 42` (32 chunks), plus the key provisions listed below.
+## Automated checks
+- 16 unit tests on synthetic documents and 14 structural checks on the real corpus: all pass (30 total).
+- Structural checks cover: unit counts per source, citation order, provenance offsets (each chunk's end matches the end of its cited source span), key-provision wording, no Hindi or Gazette junk, chunk size ceiling.
 
-## Result
-- Structural checks: PASS (counts, order, provenance offsets, anchor words)
-- Manual spot-check: 32 of 32 sampled chunks verified correct, structural checks passed
+## Corpus
+1,554 chunks: GDPR 838, DPDP Act 208, DPDP Rules 128, CCPA 380.
 
-| chunk_id | citation correct? | text complete and accurate? | boundary correct? | notes |
-|---|---|---|---|---|
-| gdpr:art6:p3:ptb:w2 | yes | yes | yes | closing paragraph attached to point (b) |
-| gdpr:rec:173 | yes | yes | yes | footnote marker ( 18 ) noted near end of recitals |
-| dpdp_rules:sched-fourth:w6 | yes | yes | yes | starts mid-id list, text matches English Fourth Schedule |
-| gdpr:art4:p1 | yes | yes | yes | key provision: definition of personal data |
-| gdpr:art17:p1 | yes | yes | yes | key provision: right to erasure |
-| gdpr:art33:p1 | yes | yes | yes | key provision: breach notification within 72 hours |
-| dpdp:s8:p6 | yes | yes | yes | key provision: breach intimation to Board |
-| dpdp:s9 | yes | yes | yes | key provision: children's data consent |
-| dpdp:s16 | yes | yes | yes | key provision: cross-border data transfer |
-| dpdp_rules:r7 | yes | yes | yes | key provision: detailed breach intimation report |
-| dpdp_rules:r15 | yes | yes | yes | key provision: transfer outside India |
-| ccpa:s1798.105:pa | yes | yes | yes | key provision: consumer right to deletion |
-| ccpa:s1798.140:pv | yes | yes | yes | key provision: personal information definition |
+## Manual spot-check
+Status: in progress. Results will be added in a follow-up commit.
+Sample: `python scripts/sample_chunks.py 8 42` (32 chunks) plus the key provisions listed in the Phase 1 notes.
 
-## Known limitations (stated honestly)
-- Token counts are an estimate (words + punctuation); Phase 2 checks them against the real embedding tokenizer. A few chunks (largest about 270 estimated tokens) exceed the 200 budget.
-- DPDP Act section titles are not captured (they sit in the PDF margin, which we remove); citations are unaffected.
-- DPDP Rules schedules are kept as flat text; tables are not parsed.
+## Known limitations
+- Token counts are an estimate (words + punctuation); Phase 2 measures them against the real embedding tokenizer. A few chunks (largest about 270 estimated tokens) exceed the 200 budget.
+- DPDP Act section titles are not captured (they sit in the PDF margin, which is removed); citations are unaffected.
+- DPDP Rules schedules are flat text; tables are not parsed. Schedule chunks carry no heading context.
 - Scope: the CCPA statute only (CPPA regulations excluded). GDPR is the original Official Journal text; later corrigenda are not applied.
-- DPDP Rules `commencement_phase` comes from secondary sources; verify against Rule 1.
+- DPDP Rules `commencement_phase` comes from secondary sources and should be verified against Rule 1.
 - Parsing is sequence-based: a missing marker makes the unit count fall short, which the tests catch.
+- When a paragraph is split into points, its lead-in sentence is repeated in each chunk unless the lead-in is very long (over ~120 estimated tokens).
+- Closing text that follows a list of points (for example GDPR Art. 6(3)) is attached to the last point's chunk, so the point letter can be imprecise for that sentence; the paragraph number stays correct.
+- Footnote markers such as "( 18 )" remain inside some GDPR recital texts.
